@@ -48,10 +48,12 @@ def main():
     # FIND BRICK CIRCLES
     brick_width = 110
     brick_height = 210
+    min_dist = 60
 
     brick_total = 0
     first_circle = BrickCircle(radius=0, sector=0, sides=0, brick=(brick_width, brick_height))
     last_circle = BrickCircle(radius=0, sector=0, sides=0, brick=(brick_width, brick_height))
+    circles = list()
     for n in range(18, 72):
         radius = polygon_radius(brick_height, number=n)
 
@@ -62,7 +64,7 @@ def main():
             brick=(brick_width, brick_height)
         )
 
-        if circle_is_larger(elem, last_circle, radius_margin=50 + brick_width):
+        if circle_is_larger(elem, last_circle, radius_margin=min_dist + brick_width):
             logger.info(f'radius {elem.radius:>6.1f} | '
                         f'sector: {elem.sector:>6.1f} | '
                         f'sides: {elem.sides:>6.1f} | '
@@ -76,15 +78,20 @@ def main():
                 first_circle = elem
 
             last_circle = elem
+            circles.append(n)
             brick_total += n
-
-    print(f'Total number of bricks: {brick_total}')
-    print(f'Inner diameter: {first_circle.radius:.02f}')
-    print(f'Outer diameter: {last_circle.radius + 2 * brick_width:.02f}')
 
     # UPDATE SCREEN
     turtle.hideturtle()
     screen.update()
+
+    print(f'Número de tijolos: {brick_total}')
+    print(f'Diâmetro interno: {first_circle.radius:.02f} mm')
+    print(f'Diâmetro externo: {last_circle.radius + 2 * brick_width:.02f} mm')
+    print(f'Distância mínima entre círculos: {min_dist:d} mm')
+    print(f'Número de tijolos por círculo: {circles}')
+    print(f'Dimensões do tijolo: {brick_width} x {brick_height}')
+
     screen.mainloop()
 
 
