@@ -1,6 +1,8 @@
-import cv2
 from glob import glob
+
+import cv2
 from tqdm import tqdm
+import moviepy.editor as moviepy
 
 files = glob('data/raw/*.jpg')
 height, width, layers = cv2.imread(files[0]).shape
@@ -16,3 +18,6 @@ out = cv2.VideoWriter(
 for elem in tqdm(arr, desc='Building video'):
     out.write(elem)
 out.release()
+
+clip = moviepy.VideoFileClip('data/processed/timelapse.avi')
+clip.write_videofile('data/processed/timelapse.mp4')
