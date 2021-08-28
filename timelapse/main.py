@@ -20,4 +20,8 @@ for elem in tqdm(arr, desc='Building video'):
 out.release()
 
 clip = moviepy.VideoFileClip('data/processed/timelapse.avi')
-clip.write_videofile('data/processed/timelapse.mp4')
+clip.write_videofile(
+    filename='data/processed/timelapse.mp4',
+    codec='mpeg4'
+)
+clip.close()
