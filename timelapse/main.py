@@ -10,11 +10,11 @@ import moviepy.editor as moviepy
 @click.command()
 @click.option('--fps', default=10)
 def main(fps):
-    files = glob('data/raw/*.jpg')
+    files = sorted(glob('data/raw/*.jpg'))
     height, width, layers = cv2.imread(files[0]).shape
     size = (width, height)
 
-    arr = [cv2.imread(file) for file in sorted(files)]
+    arr = [cv2.imread(file) for file in files]
 
     avi = f'data/processed/timelapse-fps{fps}.avi'
     mp4 = f'data/processed/timelapse-fps{fps}.mp4'
